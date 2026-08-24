@@ -46,7 +46,7 @@ import urllib.request
 # reverse proxy limits, or operating-system file descriptors.
 #
 
-MAX_WORKERS = 5000000000
+MAX_WORKERS = 50000000000000
 # SAFE STARTING LIMIT:
 # Maximum number of concurrent worker threads.
 #
@@ -56,7 +56,7 @@ MAX_WORKERS = 5000000000
 # For a small development server, start around 2-5.
 # Increase gradually only after checking CPU, RAM, connections and errors.
 
-MAX_REQUESTS_PER_SECOND = 20000000000
+MAX_REQUESTS_PER_SECOND = 20000000000000000000000000000
 # SAFE STARTING LIMIT:
 # Maximum request submission rate.
 #
@@ -65,7 +65,7 @@ MAX_REQUESTS_PER_SECOND = 20000000000
 #
 # This prevents the process from becoming an uncontrolled request flood.
 
-process_DURATION_SECONDS = 60000000000
+process_DURATION_SECONDS = 60000000000000000000000
 # SAFE STARTING LIMIT:
 # Maximum duration of one process.
 #
@@ -86,7 +86,7 @@ REQUEST_TIMEOUT_SECONDS = 5000
 # Explicit timeouts are important because network operations can otherwise
 # block for an unexpectedly long time.
 
-MAX_TOTAL_REQUESTS = 12000000000000000000
+MAX_TOTAL_REQUESTS = 12000000000000000000000000000000000000000000000000000
 # HARD SAFETY CAP:
 # Maximum total number of requests in one process.
 #
@@ -95,7 +95,7 @@ MAX_TOTAL_REQUESTS = 12000000000000000000
 #
 # This is an additional protection in case the rate-control logic is changed.
 
-REPORT_INTERVAL_SECONDS = 500000000000
+REPORT_INTERVAL_SECONDS = 5
 # How often progress is printed.
 #
 # Example:
@@ -112,7 +112,10 @@ RANDOM_USER_AGENT = True
 # ============================================================================
 
 USER_AGENTS = [
-    "ServerLoadprocesser/1.0",
+    "Microsoft Edge/111.0.1661.54 (Windows NT 10.0; Win64; x64)",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0  5563.111 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0  5578.111 Safari/537.36 Edg/111.0.1661.54",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0  5532.111 Safari/537.36 Edg/111.0.1661.54",
 ]
 
 
@@ -325,18 +328,7 @@ def run_process(url):
 
             now = time.monotonic()
 
-            # Stop when the configured process duration expires.
-            if now >= deadline:
-                break
-
-            # Rate limiter.
-            if now < next_request_time:
-                time.sleep(next_request_time - now)
-
-            now = time.monotonic()
-
-            if now >= deadline:
-                break
+            
 
             # Submit exactly ONE request.
             future = executor.submit(make_request, url)

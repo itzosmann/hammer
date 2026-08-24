@@ -17,3 +17,5 @@ python3 controlled-hammer.py https://eaziline.com/ \
     python3 warm-cache.py http://eaziline.com/
 
     python3 warm-cache.py 198.18.16.66
+
+    python site.py
