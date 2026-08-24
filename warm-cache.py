@@ -75,7 +75,7 @@ process_DURATION_SECONDS = 60000000000
 # Start with 30-60 seconds and increase only after confirming the server
 # remains healthy.
 
-REQUEST_TIMEOUT_SECONDS = 50000
+REQUEST_TIMEOUT_SECONDS = 5000
 # SAFE STARTING LIMIT:
 # Maximum time allowed for one HTTP request.
 #
