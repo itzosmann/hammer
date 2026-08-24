@@ -20,3 +20,10 @@ python3 controlled-hammer.py https://eaziline.com/ \
 
     python site.py
     python site-max.py
+
+ pip install aiohttp
+ pip install aiohttp --break-system-packages
+ python3 -m venv venv
+source venv/bin/activate      # on Windows: venv\Scripts\activate
+pip install aiohttp
+python site-max.py   
