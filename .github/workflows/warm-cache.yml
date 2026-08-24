@@ -2,28 +2,10 @@ name: Warm Cache
 
 on:
   schedule:
-    # GitHub Actions cron does NOT support seconds.
-    #
-    # IMPORTANT:
-    # GitHub Actions scheduled workflows have a minimum
-    # supported interval of 5 minutes.
+    # GitHub Actions minimum scheduled interval is 5 minutes.
     #
     # Every 5 minutes = 300 seconds
     - cron: "*/5 * * * *"
-    #
-    # Other options:
-    #
-    # Every 10 minutes = 600 seconds
-    # - cron: "*/10 * * * *"
-    #
-    # Every 30 minutes = 1800 seconds
-    # - cron: "*/30 * * * *"
-    #
-    # Every 1 hour = 3600 seconds
-    # - cron: "0 * * * *"
-    #
-    # Every 2 hours = 7200 seconds
-    # - cron: "0 */2 * * *"
 
   # Allows you to run it manually from GitHub Actions
   workflow_dispatch:
@@ -41,5 +23,20 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Warm cache
-        run: python3 warm-cache.py http://eaziline.com/
+      - name: Warm cache - 10 simultaneous instances
+        env:
+          INSTANCES: 10
+        run: |
+          echo "Starting $INSTANCES cache warming instances..."
+
+          for i in $(seq 1 "$INSTANCES"); do
+            echo "Starting instance #$i"
+            python3 warm-cache.py http://eaziline.com/ &
+          done
+
+          echo "All $INSTANCES instances started."
+          echo "Waiting for all instances to finish..."
+
+          wait
+
+          echo "All cache warming instances completed."
