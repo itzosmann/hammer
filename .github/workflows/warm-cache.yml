@@ -1,0 +1,45 @@
+name: Warm Cache
+
+on:
+  schedule:
+    # GitHub Actions cron does NOT support seconds.
+    #
+    # IMPORTANT:
+    # GitHub Actions scheduled workflows have a minimum
+    # supported interval of 5 minutes.
+    #
+    # Every 5 minutes = 300 seconds
+    - cron: "*/5 * * * *"
+    #
+    # Other options:
+    #
+    # Every 10 minutes = 600 seconds
+    # - cron: "*/10 * * * *"
+    #
+    # Every 30 minutes = 1800 seconds
+    # - cron: "*/30 * * * *"
+    #
+    # Every 1 hour = 3600 seconds
+    # - cron: "0 * * * *"
+    #
+    # Every 2 hours = 7200 seconds
+    # - cron: "0 */2 * * *"
+
+  # Allows you to run it manually from GitHub Actions
+  workflow_dispatch:
+
+jobs:
+  warm-cache:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Warm cache
+        run: python3 warm-cache.py http://eaziline.com/
