@@ -46,7 +46,7 @@ import urllib.request
 # reverse proxy limits, or operating-system file descriptors.
 #
 
-MAX_WORKERS = 500000
+MAX_WORKERS = 5000000000
 # SAFE STARTING LIMIT:
 # Maximum number of concurrent worker threads.
 #
@@ -86,7 +86,7 @@ REQUEST_TIMEOUT_SECONDS = 50000
 # Explicit timeouts are important because network operations can otherwise
 # block for an unexpectedly long time.
 
-MAX_TOTAL_REQUESTS = 1200000000
+MAX_TOTAL_REQUESTS = 12000000000000000000
 # HARD SAFETY CAP:
 # Maximum total number of requests in one process.
 #
@@ -95,13 +95,13 @@ MAX_TOTAL_REQUESTS = 1200000000
 #
 # This is an additional protection in case the rate-control logic is changed.
 
-REPORT_INTERVAL_SECONDS = 5
+REPORT_INTERVAL_SECONDS = 500000000000
 # How often progress is printed.
 #
 # Example:
 #     Every 5 seconds print completed requests, errors and average latency.
 
-RANDOM_USER_AGENT = False
+RANDOM_USER_AGENT = True
 # Keep False unless you specifically need to process User-Agent handling.
 #
 # Changing User-Agent values is unnecessary for ordinary capacity processing.
