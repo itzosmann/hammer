@@ -46,7 +46,7 @@ import urllib.request
 # reverse proxy limits, or operating-system file descriptors.
 #
 
-MAX_WORKERS = 500
+MAX_WORKERS = 500000
 # SAFE STARTING LIMIT:
 # Maximum number of concurrent worker threads.
 #
@@ -56,7 +56,7 @@ MAX_WORKERS = 500
 # For a small development server, start around 2-5.
 # Increase gradually only after checking CPU, RAM, connections and errors.
 
-MAX_REQUESTS_PER_SECOND = 20000000
+MAX_REQUESTS_PER_SECOND = 20000000000
 # SAFE STARTING LIMIT:
 # Maximum request submission rate.
 #
@@ -65,7 +65,7 @@ MAX_REQUESTS_PER_SECOND = 20000000
 #
 # This prevents the test from becoming an uncontrolled request flood.
 
-TEST_DURATION_SECONDS = 600000
+TEST_DURATION_SECONDS = 60000000000
 # SAFE STARTING LIMIT:
 # Maximum duration of one test.
 #
@@ -75,7 +75,7 @@ TEST_DURATION_SECONDS = 600000
 # Start with 30-60 seconds and increase only after confirming the server
 # remains healthy.
 
-REQUEST_TIMEOUT_SECONDS = 50000000
+REQUEST_TIMEOUT_SECONDS = 50000
 # SAFE STARTING LIMIT:
 # Maximum time allowed for one HTTP request.
 #
@@ -86,7 +86,7 @@ REQUEST_TIMEOUT_SECONDS = 50000000
 # Explicit timeouts are important because network operations can otherwise
 # block for an unexpectedly long time.
 
-MAX_TOTAL_REQUESTS = 12000000000
+MAX_TOTAL_REQUESTS = 1200000000
 # HARD SAFETY CAP:
 # Maximum total number of requests in one test.
 #
@@ -95,7 +95,7 @@ MAX_TOTAL_REQUESTS = 12000000000
 #
 # This is an additional protection in case the rate-control logic is changed.
 
-REPORT_INTERVAL_SECONDS = 500000000
+REPORT_INTERVAL_SECONDS = 5
 # How often progress is printed.
 #
 # Example:
