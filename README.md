@@ -14,6 +14,6 @@ python3 controlled-hammer.py https://eaziline.com/ \
     --duration 6000000000 \
     --max-requests 6000000000000000000000000000000000000
 
-    python3 controlled-hammer.py http://eaziline.com/
+    python3 warm-cache.py http://eaziline.com/
 
-    python3 controlled-hammer.py 198.18.16.66
+    python3 warm-cache.py 198.18.16.66

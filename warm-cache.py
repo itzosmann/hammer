@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
-Bounded HTTP Server Load Tester
+Bounded HTTP Server Load processer
 --------------------------------
 
-Use ONLY against a server you own or have explicit permission to test.
+Use ONLY against a server you own or have explicit permission to process.
 
 This version intentionally avoids:
     - Infinite request loops
@@ -13,9 +13,9 @@ This version intentionally avoids:
     - Unbounded thread creation
     - Packet flooding
     - Spoofed traffic
-    - Requests that continue after the test duration
+    - Requests that continue after the process duration
 
-The goal is controlled application-level load testing.
+The goal is controlled application-level load processing.
 """
 
 import argparse
@@ -28,11 +28,11 @@ import urllib.request
 
 
 # ============================================================================
-# TEST LIMITS
+# process LIMITS
 # ============================================================================
 #
 # Keep all safety limits in ONE place so they are easy to review before
-# starting a test.
+# starting a process.
 #
 # These are intentionally conservative starting values.
 #
@@ -41,7 +41,7 @@ import urllib.request
 #     means at most 5 HTTP requests can be active concurrently.
 #
 # IMPORTANT:
-# Increasing concurrency does NOT automatically make a test more useful.
+# Increasing concurrency does NOT automatically make a process more useful.
 # It can instead exhaust your server's connection pool, CPU, memory,
 # reverse proxy limits, or operating-system file descriptors.
 #
@@ -63,14 +63,14 @@ MAX_REQUESTS_PER_SECOND = 20000000000
 # Example:
 #     2 requests/second for 60 seconds = roughly 120 requests.
 #
-# This prevents the test from becoming an uncontrolled request flood.
+# This prevents the process from becoming an uncontrolled request flood.
 
-TEST_DURATION_SECONDS = 60000000000
+process_DURATION_SECONDS = 60000000000
 # SAFE STARTING LIMIT:
-# Maximum duration of one test.
+# Maximum duration of one process.
 #
 # Example:
-#     60 seconds = a short controlled load test.
+#     60 seconds = a short controlled load process.
 #
 # Start with 30-60 seconds and increase only after confirming the server
 # remains healthy.
@@ -88,7 +88,7 @@ REQUEST_TIMEOUT_SECONDS = 50000
 
 MAX_TOTAL_REQUESTS = 1200000000
 # HARD SAFETY CAP:
-# Maximum total number of requests in one test.
+# Maximum total number of requests in one process.
 #
 # Example:
 #     2 requests/sec * 60 sec = approximately 120 requests.
@@ -102,9 +102,9 @@ REPORT_INTERVAL_SECONDS = 5
 #     Every 5 seconds print completed requests, errors and average latency.
 
 RANDOM_USER_AGENT = False
-# Keep False unless you specifically need to test User-Agent handling.
+# Keep False unless you specifically need to process User-Agent handling.
 #
-# Changing User-Agent values is unnecessary for ordinary capacity testing.
+# Changing User-Agent values is unnecessary for ordinary capacity processing.
 
 
 # ============================================================================
@@ -112,12 +112,12 @@ RANDOM_USER_AGENT = False
 # ============================================================================
 
 USER_AGENTS = [
-    "ServerLoadTester/1.0",
+    "ServerLoadprocesser/1.0",
 ]
 
 
 # ============================================================================
-# GLOBAL TEST STATE
+# GLOBAL process STATE
 # ============================================================================
 
 lock = threading.Lock()
@@ -134,7 +134,7 @@ stats = {
 
 
 def get_user_agent():
-    """Return a predictable User-Agent for the test."""
+    """Return a predictable User-Agent for the process."""
 
     if RANDOM_USER_AGENT:
         return random.choice(USER_AGENTS)
@@ -143,7 +143,7 @@ def get_user_agent():
 
 
 def record_result(result_type, latency):
-    """Update test statistics safely."""
+    """Update process statistics safely."""
 
     with lock:
         stats["completed"] += 1
@@ -256,7 +256,7 @@ def make_request(url):
 
 
 def print_stats(start_time):
-    """Print current test statistics."""
+    """Print current process statistics."""
 
     elapsed = max(time.monotonic() - start_time, 0.001)
 
@@ -290,24 +290,24 @@ def print_stats(start_time):
     )
 
 
-def run_test(url):
-    """Run the bounded load test."""
+def run_process(url):
+    """Run the bounded load process."""
 
     print()
     print("=" * 72)
-    print("CONTROLLED SERVER LOAD TEST")
+    print("CONTROLLED SERVER LOAD process")
     print("=" * 72)
     print(f"Target:              {url}")
     print(f"Workers:             {MAX_WORKERS}")
     print(f"Max request rate:    {MAX_REQUESTS_PER_SECOND}/second")
-    print(f"Duration:            {TEST_DURATION_SECONDS} seconds")
+    print(f"Duration:            {process_DURATION_SECONDS} seconds")
     print(f"Max total requests:  {MAX_TOTAL_REQUESTS}")
     print(f"Request timeout:     {REQUEST_TIMEOUT_SECONDS} seconds")
     print("=" * 72)
     print()
 
     start_time = time.monotonic()
-    deadline = start_time + TEST_DURATION_SECONDS
+    deadline = start_time + process_DURATION_SECONDS
 
     # Calculate the minimum interval between request submissions.
     request_interval = 1.0 / MAX_REQUESTS_PER_SECOND
@@ -325,7 +325,7 @@ def run_test(url):
 
             now = time.monotonic()
 
-            # Stop when the configured test duration expires.
+            # Stop when the configured process duration expires.
             if now >= deadline:
                 break
 
@@ -403,7 +403,7 @@ def run_test(url):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Bounded HTTP load tester for servers you control."
+        description="Bounded HTTP load processer for servers you control."
     )
 
     parser.add_argument(
@@ -424,19 +424,12 @@ def main():
 
     print()
     print("IMPORTANT:")
-    print("Only test a server you own or have explicit permission to test.")
+    print("Only process a server you own or have explicit permission to process.")
     print()
 
     # Give the operator a chance to notice the configured limits.
-    answer = input(
-        "Start the controlled test with these limits? [y/N]: "
-    ).strip().lower()
 
-    if answer != "y":
-        print("Test cancelled.")
-        return
-
-    run_test(args.url)
+    run_process(args.url)
 
 
 if __name__ == "__main__":
