@@ -29,3 +29,16 @@ pip install aiohttp
 python site-max.py   
 
 python3 site-max.py
+
+
+# Check Python
+python3 --version
+
+# Upgrade pip
+python3 -m pip install --upgrade pip
+
+# Install dependency
+python3 -m pip install aiohttp --break-system-packages
+
+# Run your script
+python3 site-max.py
